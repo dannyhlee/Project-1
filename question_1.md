@@ -1,3 +1,4 @@
+```
 CREATE EXTERNAL TABLE PAGEVIEWS
 (DOMAIN_CODE STRING,
 PAGE_TITLE STRING,
@@ -8,10 +9,10 @@ FIELDS TERMINATED BY ' '
 LOCATION '/user/dannylee/q1data';
 
 DESCRIBE PAGEVIEWS;
-
-# source files previously uploaded to ~/input for
-# the hadoop solution to question 1
-
+```
+// source files previously uploaded to ~/input for
+// the hadoop solution to question 1
+```
 LOAD DATA INPATH '/user/dannylee/input' INTO TABLE PAGEVIEWS;
 
 SELECT DISTINCT PAGE_TITLE, COUNT_VIEWS 
@@ -19,12 +20,12 @@ FROM PAGEVIEWS
 WHERE DOMAIN_CODE = 'en'
 ORDER BY COUNT_VIEWS DESC
 LIMIT 100;
+```
+// Result: multiple lines and counts
 
-# Result: multiple lines and counts
-
-# Try to Partition on the "en" value of DOMAIN_CODE
-# to speed up processing time
-
+// Try to Partition on the "en" value of DOMAIN_CODE
+// to speed up processing time
+```
 CREATE TABLE EN_VIEWS
 (PAGE_TITLE STRING,
 COUNT_VIEWS INT,
@@ -39,22 +40,25 @@ SELECT PAGE_TITLE, COUNT_VIEWS, TOTAL_RESPONSE_SIZE FROM PAGEVIEWS;
 SELECT * FROM EN_VIEWS
 ORDER BY COUNT_VIEWS DESC
 LIMIT 20;
+```
 // results in duplications main page 20 times, ascending counts
-
+```
 SELECT DISTINCT * FROM EN_VIEWS
 ORDER BY COUNT_VIEWS DESC
 LIMIT 200;
+```
 // results in duplications like above
-
+```
 SELECT PAGE_TITLE, COUNT_VIEWS
 FROM EN_VIEWS
 GROUP BY PAGE_TITLE, COUNT_VIEWS
 ORDER BY COUNT_VIEWS DESC
 LIMIT 100;
+```
 // cleaner but still many duplicates...
 
 // Redo, with John Rice's code
-
+```
 create table pageviews
 (domain_code string,
 article_name string,
@@ -65,7 +69,6 @@ fields terminated by ' ';
 
 LOAD DATA INPATH '/home/dannylee/q1data' INTO TABLE PAGEVIEWS
 
-
 SELECT DOMAIN_CODE, ARTICLE_NAME, SUM(TOTAL_VIEWS) AS TOTAL
 FROM PAGEVIEWS
 WHERE DOMAIN_CODE="en"
@@ -73,3 +76,4 @@ GROUP BY DOMAIN_CODE, ARTICLE_NAME
 SORT BY TOTAL DESC
 LIMIT 10;
 
+```
