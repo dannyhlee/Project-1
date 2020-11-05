@@ -1,10 +1,10 @@
-package dMapReduce
+package wordCount
 
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.Path
 import org.apache.hadoop.io.{IntWritable, Text, Writable}
 import org.apache.hadoop.mapreduce.Job
-import org.apache.hadoop.mapreduce.lib.input.{FileInputFormat, SequenceFileInputFormat}
+import org.apache.hadoop.mapreduce.lib.input.{FileInputFormat, SequenceFileInputFormat, TextInputFormat}
 import org.apache.hadoop.mapreduce.lib.output.{FileOutputFormat, SequenceFileOutputFormat}
 
 /**
@@ -15,31 +15,35 @@ import org.apache.hadoop.mapreduce.lib.output.{FileOutputFormat, SequenceFileOut
  * We're going to make use of command line arguments here which can be accessed
  * in the args array
  * */
-object dDriver extends App {
+object WordDriver extends App {
 
   if (args.length != 2) {
-    println("Usage: pageCountDriver <input dir> <output dir>")
+    println("Usage: WordDriver <input dir> <output dir>")
     System.exit(-1)
   }
 
-  val conf : Configuration = new Configuration();
+//  val conf : Configuration = new Configuration();
 
-  val job1 = Job.getInstance(conf, "page Count")
-  job1.setJarByClass(dDriver.getClass)
-  job1.setMapperClass(classOf[dMapper])
-//  job1.setCombinerClass(classOf[WordReducer])
-  job1.setReducerClass(classOf[dReducer])
-  job1.setOutputKeyClass(classOf[Text])
-  job1.setOutputValueClass(classOf[IntWritable])
-//  job1.setOutputFormatClass(classOf[SequenceFileOutputFormat[Writable, Writable]])
+  val job1 = Job.getInstance()
+  job1.setJobName("word count")
+  job1.setInputFormatClass(classOf[TextInputFormat])
 
   FileInputFormat.addInputPath(job1, new Path(args(0)))
   FileOutputFormat.setOutputPath(job1, new Path(args(1)))
 
-  if (!job1.waitForCompletion(true)) {
-    System.exit(1)
-  }
-//
+  job1.setJarByClass(WordDriver.getClass)
+
+  job1.setMapperClass(classOf[WordMapper])
+//  job1.setCombinerClass(classOf[WordReducer])
+  job1.setReducerClass(classOf[WordReducer])
+
+  job1.setOutputKeyClass(classOf[Text])
+  job1.setOutputValueClass(classOf[IntWritable])
+//  job1.setOutputFormatClass(classOf[SequenceFileOutputFormat[Writable, Writable]])
+
+  val success = job1.waitForCompletion(true)
+  System.exit(if (success) 0 else 1)
+
 //  val job2 = Job.getInstance(conf, "sort by frequency")
 //  job2.setJarByClass(WordDriver.getClass)
 //  job2.setMapperClass(classOf[KeyValueSwappingMapper])
@@ -50,7 +54,7 @@ object dDriver extends App {
 //  job2.setInputFormatClass(classOf[SequenceFileInputFormat[Writable, Writable]])
 //
 //  FileInputFormat.addInputPath(job2, new Path(args(1)))
-//  FileOutputFormat.setOutputPath  (job2, new Path(args(2)))
+//  FileOutputFormat.setOutputPath(job2, new Path(args(2)))
 //
 //  if (!job2.waitForCompletion(true)) {
 //    System.exit(1)
