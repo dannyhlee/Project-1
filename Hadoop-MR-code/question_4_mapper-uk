@@ -5,7 +5,7 @@ import org.apache.hadoop.mapreduce.Mapper
 
 class WordMapper extends Mapper[LongWritable, Text, Text, IntWritable] {
   def ukRegex(toMatch: String): Boolean = {
-    val ukRegex = ".*(D\\d*).*$".r
+    val ukRegex = ".*(D\\d+).*$".r
 
     toMatch match {
       case ukRegex(value) => true
@@ -14,7 +14,7 @@ class WordMapper extends Mapper[LongWritable, Text, Text, IntWritable] {
   }
 
   def ukGetViews(toMatch: String): String = {
-    val ukRegex = "(D\\d*)".r
+    val ukRegex = "(D\\d+)".r
 
     val pageName = toMatch.split("\\t")(0)
     val filteredViews = ukRegex
