@@ -42,6 +42,8 @@
             (uk.VIEW_COUNT_UK - us.VIEW_COUNT_US) as DIFFERENCE
         FROM UK_3AM_TO_4AM_VIEWS uk JOIN US_3AM_TO_4AM_VIEWS us
         ON (uk.PAGE_NAME = us.PAGE_NAME)
-        ORDER BY DIFFERENCE;
+        ORDER BY DIFFERENCE DESC;
         
+        
+
         ```
