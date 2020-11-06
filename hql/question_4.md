@@ -45,5 +45,10 @@
         ORDER BY DIFFERENCE DESC;
         
         
+        -- My original query
+        select * from uk_us_join order by difference desc limit 100;
+        
+        -- What I went with
+         SELECT * from UK_US_JOIN WHERE VIEW_COUNT_US < 100 ORDER by DIFFERENCE desc,VIEW_COUNT_US asc
 
         ```
