@@ -45,10 +45,20 @@
         ORDER BY DIFFERENCE DESC;
         
         
+        -- JOIN AU AND US TABLES
+        CREATE TABLE AU_US_JOIN AS
+        SELECT au.PAGE_NAME, au.VIEW_COUNT_AU, us.VIEW_COUNT_US, 
+            (au.VIEW_COUNT_AU - us.VIEW_COUNT_US) as DIFFERENCE
+        FROM AU_3AM_TO_4AM_VIEWS au JOIN US_3AM_TO_4AM_VIEWS us
+        ON (AU.PAGE_NAME = us.PAGE_NAME)
+        ORDER BY DIFFERENCE DESC;
+        
+        
         -- My original query
         select * from uk_us_join order by difference desc limit 100;
         
         -- What I went with
-         SELECT * from UK_US_JOIN WHERE VIEW_COUNT_US < 100 ORDER by DIFFERENCE desc,VIEW_COUNT_US asc
+        SELECT * from UK_US_JOIN WHERE VIEW_COUNT_US < 100 ORDER by DIFFERENCE desc,VIEW_COUNT_US asc
 
         ```
+        SELECT * from AU_US_JOIN ORDER by DIFFERENCE desc,VIEW_COUNT_US asc limit 25;
