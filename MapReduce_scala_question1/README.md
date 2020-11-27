@@ -12,6 +12,8 @@ The download of 24 files will require 1.2 GB of disk (gzipped)
 
 #### Prepare Hadoop/HDFS
 
+(Hadoop installation instructions available [here](https://hadoop.apache.org/docs/r3.2.1/hadoop-project-dist/hadoop-common/SingleCluster.html))
+
 1. Format the filesystem:  
 ```
 $ bin/hdfs namenode -format
@@ -51,7 +53,7 @@ You will need the [sbt-assembly](https://github.com/sbt/sbt-assembly) plugin to 
 
 When the jar finishes compiling, you will find your artifact in the `target/scala-2.13/` directory.
 
-Usage: pageviewMR <input dir> <inter dir> <output dir>
+Usage: pageviewMR input-dir inter-dir output-dir
 
 To run the jar in hadoop, specify an input directory on HDFS, and intermediary directory and an output directory.  The output directory must not exist or else you will receive a warning and the Hadoop will exit.
 
