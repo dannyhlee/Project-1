@@ -1,10 +1,10 @@
-#### Read Me
+#### Intro
 
 This folder contains the source code for the Hadoop mapreduce program (Scala) for Question 1 of Project 1.  To replicate the results follow these instructions.
 
 #### Data source
 
-The data used for this question is filtered by Wikipedia to what they believe is only human traffic.  The analytics dataset description is available [here](https://dumps.wikimedia.org/other/pageviews/readme.html).  The dataset used for this question was all traffic on the date of October 20, 2020.  Alternatively, it the dataset can be retrieved in via command line using `wget`.  
+The data used for this question is filtered by Wikipedia to what they believe is only human traffic.  The analytics dataset description is available [here](https://dumps.wikimedia.org/other/pageviews/readme.html).  The dataset used for this question was all traffic on the date of October 20, 2020.  The dataset can be retrieved in the shell via the command line utility `wget`.  
 ```
 $ wget https://dumps.wikimedia.org/other/pageviews/2020/2020-10/pageviews-20201020-{00..23}0000.gz
 ```
