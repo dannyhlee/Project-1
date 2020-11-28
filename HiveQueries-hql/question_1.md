@@ -168,7 +168,8 @@ $ tail part-r-00000
 
 #### Please Remember:
 
-To exit beeline use the 
+To exit beeline enter the command `!quit`
+
 To shut down Yarn and DFS if you are just testing:
 ```
 $ sbin/stop-dfs.sh
